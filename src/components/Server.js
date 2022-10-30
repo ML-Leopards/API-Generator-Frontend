@@ -1,18 +1,12 @@
-import react from "react";
 import Donut from "./charts/Donut";
-import { Divider, Box, Typography, Grid, Card, Avatar } from "@mui/material";
+import { Divider, Box, Typography, Grid, Card} from "@mui/material";
 import React from "react";
-import NoteAddIcon from "@mui/icons-material/NoteAdd";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import BackupTableIcon from "@mui/icons-material/BackupTable";
 import Area from "./charts/Area";
 
 export default function Server() {
   return (
     <>
-      <Box sx={{ marginTop: 3 }}>
+      <Box sx={{ marginTop: 1 }}>
         <Typography
           align="left"
           sx={{
@@ -30,7 +24,7 @@ export default function Server() {
             sx={{
               fontWeight: 600,
               fontSize: "20px",
-              marginTop: "50px",
+              marginTop: "20px",
               fontFamily: "Fira Sans Extra Condensed",
             }}
           >
@@ -111,7 +105,7 @@ export default function Server() {
             sx={{
               fontWeight: 600,
               fontSize: "20px",
-              marginTop: "60px",
+              marginTop: "20px",
               fontFamily: "Fira Sans Extra Condensed",
             }}
           >
