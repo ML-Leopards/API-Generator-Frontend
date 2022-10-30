@@ -7,11 +7,6 @@ import {
   IconButton,
   Button,
 } from "@mui/material";
-import NoteAddIcon from "@mui/icons-material/NoteAdd";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import BackupTableIcon from "@mui/icons-material/BackupTable";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -20,7 +15,6 @@ import CopyAllIcon from "@mui/icons-material/CopyAll";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 export default function Api() {
-  const [copied, setCopied] = React.useState(0);
   return (
     <>
       <Box sx={{ marginTop: 3 }}>
