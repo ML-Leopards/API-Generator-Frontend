@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import {
   Divider,
   Box,
@@ -13,8 +13,18 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CopyAllIcon from "@mui/icons-material/CopyAll";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import axios from 'axios';
 
 export default function Api() {
+  const [data, setData] = useState([]);
+  const [isError, setIsError] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:5000/api")
+      .then((response) => setData(response.data))
+      .catch((error) => setIsError(isError.message));
+  }, []);
+  console.log(data.api);
   return (
     <>
       <Box sx={{ marginTop: 3 }}>
@@ -108,13 +118,7 @@ export default function Api() {
                   >
                     <div style={{ display: "inline-block", float: "right" }}>
                       <IconButton>
-                        <CopyAllIcon
-                          onClick={() => {
-                            navigator.clipboard.writeText(
-                              this.state.textToCopy
-                            );
-                          }}
-                        />
+                        <CopyAllIcon />
                       </IconButton>
                     </div>
                     <code>
@@ -175,13 +179,7 @@ export default function Api() {
                   >
                     <div style={{ display: "inline-block", float: "right" }}>
                       <IconButton>
-                        <CopyAllIcon
-                          onClick={() => {
-                            navigator.clipboard.writeText(
-                              this.state.textToCopy
-                            );
-                          }}
-                        />
+                        <CopyAllIcon />
                       </IconButton>
                     </div>
                     <code>orm.execute("readStudentByID", (1))</code>
@@ -303,13 +301,7 @@ export default function Api() {
                   >
                     <div style={{ display: "inline-block", float: "right" }}>
                       <IconButton>
-                        <CopyAllIcon
-                          onClick={() => {
-                            navigator.clipboard.writeText(
-                              this.state.textToCopy
-                            );
-                          }}
-                        />
+                        <CopyAllIcon />
                       </IconButton>
                     </div>
                     <code>orm.execute("deleteStudentByID", (1))</code>

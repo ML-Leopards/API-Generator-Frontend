@@ -1,5 +1,5 @@
 import { Divider, Box, Typography, Grid, Card, Avatar } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import EditIcon from "@mui/icons-material/Edit";
@@ -7,10 +7,24 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
 import Line from "./charts/Line";
 import Pie from "./charts/Pie";
+import axios from "axios";
 
 export default function Analysis() {
+  const [data, setData] = useState([]);
+  const [isError, setIsError] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:5000/numerics")
+      .then((response) => setData(response.data))
+      .catch((error) => setIsError(isError.message));
+  }, []);
+  console.log(data.numeric);
+  // const renderList = data.numeric.map((item) => <div>{item}</div>);
   return (
     <>
+      {/* {data.map((item) => (
+        <li>{item}</li>
+      ))} */}
       <Box sx={{ marginTop: 3 }}>
         <Typography
           align="left"

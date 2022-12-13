@@ -8,7 +8,7 @@ export default function Navbar() {
     <div>
       <nav class="n">
         <ul className="left">
-          <li onClick={()=>{navigate("/")}}>
+          <li onClick={()=>{navigate("/trial")}}>
             <img src={logo1} alt="" className="logo" />
           </li>
         </ul>
