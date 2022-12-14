@@ -7,6 +7,7 @@ import {
   IconButton,
   Button,
   TextField,
+  Modal,
 } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -28,12 +29,29 @@ export default function Api() {
       .then((response) => setData(response.data))
       .catch((error) => setIsError(error.message));
   }, []);
-  const handleExecute = () =>{
-    const data = {}
+
+  const handleExecute = () => {
+    const data = {};
     // axios.post("http://127.0.0.1:5000/connection", {
     //   query
     // })
-  }
+  };
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 500,
+    height: 450,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <>
       <Box sx={{ marginTop: 3 }}>
@@ -54,7 +72,7 @@ export default function Api() {
             sx={{
               fontWeight: 600,
               fontSize: "20px",
-              marginTop: "20px",
+              marginTop: 2,
               fontFamily: "Fira Sans Extra Condensed",
             }}
           >
@@ -63,10 +81,62 @@ export default function Api() {
               <Button
                 variant="contained"
                 startIcon={<FileDownloadIcon />}
-                sx={{ backgroundColor: "#08002B" }}
+                sx={{ backgroundColor: "#08002B", margin: 1 }}
               >
-                Export as JSON
+                Export as CSV
               </Button>
+            </div>
+            <div style={{ float: "right" }}>
+              <Button
+                variant="contained"
+                sx={{ backgroundColor: "#08002B", margin: 1 }}
+                onClick={handleOpen}
+              >
+                Open modal
+              </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                    sx={{ textAlign: "center" }}
+                  >
+                    Database Information
+                  </Typography>
+                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <TextField
+                      label="Username"
+                      fullWidth
+                      value={userInput}
+                      sx={{ mt: 2 }}
+                    />
+                    <TextField
+                      label="Password"
+                      fullWidth
+                      value={userInput}
+                      sx={{ mt: 2 }}
+                    />
+                    <TextField
+                      label="Host Url"
+                      fullWidth
+                      value={userInput}
+                      sx={{ mt: 2 }}
+                    />
+                    <TextField
+                      label="Port"
+                      fullWidth
+                      value={userInput}
+                      sx={{ mt: 2 }}
+                    />
+                  </Typography>
+                </Box>
+              </Modal>
             </div>
           </Typography>
           <Grid
@@ -141,7 +211,7 @@ export default function Api() {
                           />
                         </Grid>
                         <Grid item xs={1}>
-                          <IconButton onClick={()=>handleExecute(e.name)}>
+                          <IconButton onClick={() => handleExecute(e.name)}>
                             <PlayArrow />
                           </IconButton>
                         </Grid>
