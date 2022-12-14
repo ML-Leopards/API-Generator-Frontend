@@ -2,32 +2,16 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import "./Files.css";
 import { UploadFileOutlined } from "@mui/icons-material";
-import axios from "axios";
 
-export default function Files() {
+export default function Files(props) {
   const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles[0]);
+    props.setFiles(acceptedFiles[0]);
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-  console.log(getInputProps);
-  // useEffect(() => {
-  //   axios
-  //     .post("http://127.0.0.1:5000/file", {
-  //       'file': acceptedFiles
-  //     })
-  //     .then(
-  //       (response) => {
-  //         console.log(response);
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  // });
   return (
     <>
       <div {...getRootProps()}>
-        <input {...getInputProps()} />
+        <input {...getInputProps()} disabled={props.loading}/>
         {isDragActive ? (
           <div>Drop the files here ...</div>
         ) : (
@@ -36,7 +20,7 @@ export default function Files() {
               Drag and drop <br /> or <br /> browse/upload
               <br />
               <br />
-              <UploadFileOutlined sx={{ fontSize: "50px" }} />
+              <UploadFileOutlined sx={{ fontSize: "50px" }}/>
             </div>
           </div>
         )}

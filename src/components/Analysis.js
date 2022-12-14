@@ -18,13 +18,8 @@ export default function Analysis() {
       .then((response) => setData(response.data))
       .catch((error) => setIsError(isError.message));
   }, []);
-  console.log(data.numeric);
-  // const renderList = data.numeric.map((item) => <div>{item}</div>);
   return (
     <>
-      {/* {data.map((item) => (
-        <li>{item}</li>
-      ))} */}
       <Box sx={{ marginTop: 3 }}>
         <Typography
           align="left"
@@ -81,7 +76,7 @@ export default function Analysis() {
                         marginLeft: "10px",
                       }}
                     >
-                      100
+                      {data.numeric && data.numeric[0]}
                     </Typography>
                     <Typography
                       align="left"
@@ -123,7 +118,7 @@ export default function Analysis() {
                         marginLeft: "10px",
                       }}
                     >
-                      1200
+                      {data.numeric && data.numeric[1]}
                     </Typography>
                     <Typography
                       align="left"
@@ -165,7 +160,7 @@ export default function Analysis() {
                         marginLeft: "10px",
                       }}
                     >
-                      164
+                      {data.numeric && data.numeric[2]}
                     </Typography>
                     <Typography
                       align="left"
@@ -207,7 +202,7 @@ export default function Analysis() {
                         marginLeft: "10px",
                       }}
                     >
-                      15
+                      {data.numeric && data.numeric[3]}
                     </Typography>
                     <Typography
                       align="left"

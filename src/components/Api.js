@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import {
   Divider,
   Box,
@@ -6,6 +6,7 @@ import {
   Grid,
   IconButton,
   Button,
+  TextField,
 } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -13,18 +14,26 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CopyAllIcon from "@mui/icons-material/CopyAll";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import axios from 'axios';
+import axios from "axios";
+import { PlayArrow } from "@mui/icons-material";
+import "./Api.css";
 
 export default function Api() {
   const [data, setData] = useState([]);
   const [isError, setIsError] = useState([]);
+  const [userInput, setUserInput] = useState("");
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:5000/api")
+      .get("http://127.0.0.1:5000/getapis")
       .then((response) => setData(response.data))
-      .catch((error) => setIsError(isError.message));
+      .catch((error) => setIsError(error.message));
   }, []);
-  console.log(data.api);
+  const handleExecute = () =>{
+    const data = {}
+    // axios.post("http://127.0.0.1:5000/connection", {
+    //   query
+    // })
+  }
   return (
     <>
       <Box sx={{ marginTop: 3 }}>
@@ -65,250 +74,82 @@ export default function Api() {
             marginTop={0}
             spacing={3}
             direction="row"
-            // justifyContent="space-between"
-            // alignItems="left"
+            maxHeight={"50%"}
+            className="api_main"
           >
-            <Grid item xs={12}>
-              <Accordion sx={{ backgroundColor: "#BDE3C7" }}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel2a-content"
-                  id="panel2a-header"
-                >
-                  <Typography
-                    align="left"
+            {data &&
+              data.apis &&
+              data.apis.map((e) => (
+                <Grid item xs={12}>
+                  <Accordion
                     sx={{
-                      fontFamily: "Fira Sans Extra Condensed",
-                      fontWeight: 600,
+                      backgroundColor:
+                        e.type === "read"
+                          ? "#BDCAF5"
+                          : e.type === "create"
+                          ? "#BDE3C7"
+                          : e.type === "update"
+                          ? "#EBE6B8"
+                          : "#FCBBBB",
                     }}
                   >
-                    CreateStudent
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography
-                    align="left"
-                    sx={{
-                      fontWeight: 400,
-                      fontSize: "15px",
-                      fontFamily: "Fira Sans Extra Condensed",
-                    }}
-                  >
-                    Creates a Student
-                  </Typography>
-                  <Typography
-                    align="left"
-                    sx={{
-                      fontWeight: 600,
-                      fontSize: "15px",
-                      fontFamily: "Fira Sans Extra Condensed",
-                    }}
-                  >
-                    Syntax
-                  </Typography>
-                  <pre
-                    style={{
-                      color: "black",
-                      backgroundColor: "#f5f5f5",
-                      paddingLeft: "10px",
-                      borderRadius: "10px",
-                      textAlign: "left",
-                      alignContent: "center",
-                    }}
-                  >
-                    <div style={{ display: "inline-block", float: "right" }}>
-                      <IconButton>
-                        <CopyAllIcon />
-                      </IconButton>
-                    </div>
-                    <code>
-                      orm.execute("createStudent", ("XYZ","ABC", 12,
-                      "01-01-2003"))
-                    </code>
-                  </pre>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid item xs={12}>
-              <Accordion sx={{ backgroundColor: "#BDCAF5" }}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel2a-content"
-                  id="panel2a-header"
-                >
-                  <Typography
-                    align="left"
-                    sx={{
-                      fontFamily: "Fira Sans Extra Condensed",
-                      fontWeight: 600,
-                    }}
-                  >
-                    ReadStudentByID
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography
-                    align="left"
-                    sx={{
-                      fontWeight: 400,
-                      fontSize: "15px",
-                      fontFamily: "Fira Sans Extra Condensed",
-                    }}
-                  >
-                    Gets the information of a student by it's ID
-                  </Typography>
-                  <Typography
-                    align="left"
-                    sx={{
-                      fontWeight: 600,
-                      fontSize: "15px",
-                      fontFamily: "Fira Sans Extra Condensed",
-                    }}
-                  >
-                    Syntax
-                  </Typography>
-                  <pre
-                    style={{
-                      color: "black",
-                      backgroundColor: "#f5f5f5",
-                      paddingLeft: "10px",
-                      borderRadius: "10px",
-                      textAlign: "left",
-                      alignContent: "center",
-                    }}
-                  >
-                    <div style={{ display: "inline-block", float: "right" }}>
-                      <IconButton>
-                        <CopyAllIcon />
-                      </IconButton>
-                    </div>
-                    <code>orm.execute("readStudentByID", (1))</code>
-                  </pre>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid item xs={12}>
-              <Accordion sx={{ backgroundColor: "#EBE6B8" }}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel2a-content"
-                  id="panel2a-header"
-                >
-                  <Typography
-                    align="left"
-                    sx={{
-                      fontFamily: "Fira Sans Extra Condensed",
-                      fontWeight: 600,
-                    }}
-                  >
-                    UpdateStudentByID
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography
-                    align="left"
-                    sx={{
-                      fontWeight: 400,
-                      fontSize: "15px",
-                      fontFamily: "Fira Sans Extra Condensed",
-                    }}
-                  >
-                    Updates Student Information by ID
-                  </Typography>
-                  <Typography
-                    align="left"
-                    sx={{
-                      fontWeight: 600,
-                      fontSize: "15px",
-                      fontFamily: "Fira Sans Extra Condensed",
-                    }}
-                  >
-                    Syntax
-                  </Typography>
-                  <pre
-                    style={{
-                      color: "black",
-                      backgroundColor: "#f5f5f5",
-                      paddingLeft: "10px",
-                      borderRadius: "10px",
-                      textAlign: "left",
-                      alignContent: "center",
-                    }}
-                  >
-                    <div style={{ display: "inline-block", float: "right" }}>
-                      <IconButton>
-                        <CopyAllIcon
-                          onClick={() => {
-                            navigator.clipboard.writeText(
-                              this.state.textToCopy
-                            );
-                          }}
-                        />
-                      </IconButton>
-                    </div>
-                    <code>orm.execute("updateStudentByID", (1,"XYZAB"))</code>
-                  </pre>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid item xs={12}>
-              <Accordion sx={{ backgroundColor: "#FCBBBB" }}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel2a-content"
-                  id="panel2a-header"
-                >
-                  <Typography
-                    align="left"
-                    sx={{
-                      fontFamily: "Fira Sans Extra Condensed",
-                      fontWeight: 600,
-                    }}
-                  >
-                    DeleteStudentByID
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography
-                    align="left"
-                    sx={{
-                      fontWeight: 400,
-                      fontSize: "15px",
-                      fontFamily: "Fira Sans Extra Condensed",
-                    }}
-                  >
-                    Delete Student by ID
-                  </Typography>
-                  <Typography
-                    align="left"
-                    sx={{
-                      fontWeight: 600,
-                      fontSize: "15px",
-                      fontFamily: "Fira Sans Extra Condensed",
-                    }}
-                  >
-                    Syntax
-                  </Typography>
-                  <pre
-                    style={{
-                      color: "black",
-                      backgroundColor: "#f5f5f5",
-                      paddingLeft: "10px",
-                      borderRadius: "10px",
-                      textAlign: "left",
-                      alignContent: "center",
-                    }}
-                  >
-                    <div style={{ display: "inline-block", float: "right" }}>
-                      <IconButton>
-                        <CopyAllIcon />
-                      </IconButton>
-                    </div>
-                    <code>orm.execute("deleteStudentByID", (1))</code>
-                  </pre>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography
+                        align="left"
+                        sx={{
+                          fontFamily: "Fira Sans Extra Condensed",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {e.name}
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography
+                        align="left"
+                        sx={{
+                          fontWeight: 400,
+                          fontSize: "15px",
+                          fontFamily: "Fira Sans Extra Condensed",
+                          marginBottom: "5px",
+                        }}
+                      >
+                        Details- {e.details}
+                      </Typography>
+                      <Typography
+                        align="left"
+                        sx={{
+                          fontWeight: 400,
+                          fontSize: "15px",
+                          fontFamily: "Fira Sans Extra Condensed",
+                          marginBottom: "15px",
+                        }}
+                      >
+                        Datatype of Input- {e.datatype}
+                      </Typography>
+                      <Grid container>
+                        <Grid item xs={11}>
+                          <TextField
+                            label="Comma Seperated User Input"
+                            fullWidth
+                            value={userInput}
+                            onChange={(e) => setUserInput(e.target.value)}
+                          />
+                        </Grid>
+                        <Grid item xs={1}>
+                          <IconButton onClick={()=>handleExecute(e.name)}>
+                            <PlayArrow />
+                          </IconButton>
+                        </Grid>
+                      </Grid>
+                    </AccordionDetails>
+                  </Accordion>
+                </Grid>
+              ))}
           </Grid>
         </Box>
       </Box>
