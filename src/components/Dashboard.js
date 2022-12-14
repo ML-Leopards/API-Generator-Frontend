@@ -5,7 +5,6 @@ import logo2 from "../assets/logo2.png";
 import { StorageRounded, TimelineSharp } from "@mui/icons-material";
 import DataObjectIcon from "@mui/icons-material/DataObject";
 import Analysis from "./Analysis";
-import Server from "./Server";
 import Api from "./Api";
 import { useNavigate } from "react-router-dom";
 
@@ -49,7 +48,7 @@ export default function Dashboard() {
             >
               <TimelineSharp></TimelineSharp>
             </MenuItem>
-            <MenuItem
+            {/* <MenuItem
               sx={{
                 color: com == 1 ? "#879AE0" : "#fff",
                 justifyContent: "center",
@@ -58,7 +57,7 @@ export default function Dashboard() {
               onClick={() => setCom(1)}
             >
               <StorageRounded></StorageRounded>
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem
               sx={{
                 color: com == 2 ? "#879AE0" : "#fff",
@@ -71,7 +70,7 @@ export default function Dashboard() {
             </MenuItem>
           </Drawer>
           <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-            {com === 0 ? <Analysis /> : com === 1 ? <Server /> : <Api />}
+            {com === 0 ? <Analysis /> : com === 2 ? <Api />: <Analysis/>}
           </Box>
         </Box>
       </div>

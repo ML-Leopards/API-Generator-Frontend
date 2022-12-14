@@ -255,7 +255,7 @@ export default function Analysis() {
                         color: "#8B90B6",
                       }}
                     >
-                      tables
+                      miscellaneous
                     </Typography>
                   </Grid>
                 </Grid>

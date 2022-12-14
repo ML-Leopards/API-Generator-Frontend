@@ -1,7 +1,7 @@
 import React from "react";
 import Chart from "react-apexcharts";
 export default function Pie() {
-  const [series, setSeries] = React.useState([44, 55]);
+  const [series, setSeries] = React.useState([0, 100]);
   const [options, setOptions] = React.useState({
     labels: ["Unsuccessful Queries", "Successful Queries"],
   });
