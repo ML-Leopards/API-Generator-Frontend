@@ -274,7 +274,7 @@ export default function Api() {
               <Grid className="result">
                 <table>
                   <tr>
-                    {resultHeader.map((col) => (
+                    {resultHeader && resultHeader.map((col) => (
                       <th>{col}</th>
                     ))}
                   </tr>
