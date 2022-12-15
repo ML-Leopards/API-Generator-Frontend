@@ -23,6 +23,14 @@ export default function Api() {
   const [data, setData] = useState([]);
   const [isError, setIsError] = useState([]);
   const [userInput, setUserInput] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [hostURL, setHostURL] = useState("");
+  const [port, setPort] = useState("");
+  const [database, setDatabase] = useState("");
+  const [result, setResult] = useState(null);
+  const [resultModal, setResultModal] = useState(false);
+  const [resultHeader, setResultHeader] = useState(null);
   useEffect(() => {
     axios
       .get("http://127.0.0.1:5000/getapis")
@@ -30,11 +38,31 @@ export default function Api() {
       .catch((error) => setIsError(error.message));
   }, []);
 
-  const handleExecute = () => {
-    const data = {};
-    // axios.post("http://127.0.0.1:5000/connection", {
-    //   query
-    // })
+  const handleExecute = (query, head) => {
+    const input_array = userInput.split(",");
+    const data = {
+      username: username,
+      password: password,
+      database: database,
+      host_url: hostURL,
+      port: port,
+      query_name: query,
+      query_info: input_array,
+    };
+    console.log(data);
+    axios.post("http://127.0.0.1:5000/connection", data).then(
+      (res) => {
+        if (res.status === 200) {
+          setResult(res.data.result);
+          setResultHeader(head);
+          setResultModal(true);
+          console.log(res);
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   };
   const style = {
     position: "absolute",
@@ -42,7 +70,7 @@ export default function Api() {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 500,
-    height: 450,
+    height: 550,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -51,7 +79,6 @@ export default function Api() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   return (
     <>
       <Box sx={{ marginTop: 3 }}>
@@ -92,13 +119,14 @@ export default function Api() {
                 sx={{ backgroundColor: "#08002B", margin: 1 }}
                 onClick={handleOpen}
               >
-                Open modal
+                Connection
               </Button>
               <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                sx={{ paddingBottom: "10px" }}
               >
                 <Box sx={style}>
                   <Typography
@@ -109,32 +137,44 @@ export default function Api() {
                   >
                     Database Information
                   </Typography>
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    <TextField
-                      label="Username"
-                      fullWidth
-                      value={userInput}
-                      sx={{ mt: 2 }}
-                    />
-                    <TextField
-                      label="Password"
-                      fullWidth
-                      value={userInput}
-                      sx={{ mt: 2 }}
-                    />
-                    <TextField
-                      label="Host Url"
-                      fullWidth
-                      value={userInput}
-                      sx={{ mt: 2 }}
-                    />
-                    <TextField
-                      label="Port"
-                      fullWidth
-                      value={userInput}
-                      sx={{ mt: 2 }}
-                    />
-                  </Typography>
+                  <TextField
+                    label="Username"
+                    fullWidth
+                    value={username}
+                    sx={{ mt: 2 }}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <TextField
+                    label="Password"
+                    fullWidth
+                    value={password}
+                    sx={{ mt: 2 }}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <TextField
+                    label="Host Url"
+                    fullWidth
+                    value={hostURL}
+                    sx={{ mt: 2 }}
+                    onChange={(e) => setHostURL(e.target.value)}
+                  />
+                  <TextField
+                    label="Port"
+                    fullWidth
+                    value={port}
+                    sx={{ mt: 2 }}
+                    onChange={(e) => setPort(e.target.value)}
+                  />
+                  <TextField
+                    label="Database"
+                    fullWidth
+                    value={database}
+                    sx={{ mb: 5, mt: 2 }}
+                    onChange={(e) => setDatabase(e.target.value)}
+                  />
+                  <Button fullWidth variant="contained" onClick={handleClose}>
+                    Connect
+                  </Button>
                 </Box>
               </Modal>
             </div>
@@ -211,7 +251,9 @@ export default function Api() {
                           />
                         </Grid>
                         <Grid item xs={1}>
-                          <IconButton onClick={() => handleExecute(e.name)}>
+                          <IconButton
+                            onClick={() => handleExecute(e.name, e.head)}
+                          >
                             <PlayArrow />
                           </IconButton>
                         </Grid>
@@ -221,6 +263,33 @@ export default function Api() {
                 </Grid>
               ))}
           </Grid>
+          <Modal
+            open={resultModal}
+            onClose={() => setResultModal(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            sx={{ paddingBottom: "10px" }}
+          >
+            <Box sx={style}>
+              <Grid className="result">
+                <table>
+                  <tr>
+                    {resultHeader.map((col) => (
+                      <th>{col}</th>
+                    ))}
+                  </tr>
+                  {result &&
+                    result.map((row) => (
+                      <tr>
+                        {row.map((col) => (
+                          <td>{col}</td>
+                        ))}
+                      </tr>
+                    ))}
+                </table>
+              </Grid>
+            </Box>
+          </Modal>
         </Box>
       </Box>
     </>

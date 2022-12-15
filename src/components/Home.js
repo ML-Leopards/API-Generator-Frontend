@@ -18,7 +18,14 @@ export default function Home() {
     axios.post("http://127.0.0.1:5000/file", data).then(
       (response) => {
         if (response.status === 200) {
-          navigate("/dashboard/analysis");
+          axios.get("http://127.0.0.1:5000/api").then(
+            (resp) => {
+              navigate("/dashboard/analysis");
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
         }
       },
       (error) => {
@@ -37,11 +44,15 @@ export default function Home() {
               API Generator and Data Analysis
               <br />
               <div className="drop">
-                <Files setFiles={setFiles} loading={loading}/>
+                <Files setFiles={setFiles} loading={loading} />
               </div>
               <div>
-                <button className="analyse" onClick={handlefile} disabled={loading}>
-                  {loading? <CircularProgress/> : "Upload" }
+                <button
+                  className="analyse"
+                  onClick={handlefile}
+                  disabled={loading}
+                >
+                  {loading ? <CircularProgress /> : "Upload"}
                 </button>
               </div>
             </div>
